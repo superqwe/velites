@@ -3,5 +3,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-    in_calendario = models.BooleanField(default=True)
+    nickname = models.CharField(max_length=100, null=True, blank=True)
+    calendario_aggiungi_presenza = models.BooleanField(default=True)
 
