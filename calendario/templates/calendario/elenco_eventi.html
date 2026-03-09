@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendario</title>
+
+</head>
+<body>
+
+{% for evento in eventi %}
+<p>{{evento.data}} - {{evento.titolo}} - {{evento.campo.campo}}</p>
+{% endfor %}
+
+</body>
+</html>
