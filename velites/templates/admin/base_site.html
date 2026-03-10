@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}
+Admin Velites
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <img class="logo_ottomano" src="{% static 'sgi/images/Impresa_Ottomano.jpg' %}" style="max-height: 1.5rem">
+    <a href="{% url 'admin:index' %}">Admin Velites</a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+

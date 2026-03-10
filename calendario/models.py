@@ -45,10 +45,6 @@ class Evento(models.Model):
                                  null=True, blank=True)
     campo = models.ForeignKey(Campo, on_delete=models.CASCADE, default=get_campo_default,
                               null=True, blank=True)
-    # attivita = models.ForeignKey(Attivita, on_delete=models.CASCADE, default=get_campo_default,
-    #                              null=True, blank=True)
-    # campo = models.ForeignKey(Campo, on_delete=models.CASCADE, default=get_campo_default,
-    #                           null=True, blank=True)
 
     class Meta:
         ordering = ['data']

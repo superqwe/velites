@@ -11,7 +11,15 @@ def index(request):
 
 
 def calendario(request):
-    eventi = Evento.objects.all().order_by('data')
-    context = {'eventi': eventi}
+    eventi = Evento.objects.all().order_by('-data')
+    context = {'eventi': eventi,
+               'pagina_attiva_calendario_completo': 'active'}
 
-    return render(request, 'calendario/elenco_eventi.html', context)
+    return render(request, 'calendario/calendario_completo.html', context)
+
+def prossimo_evento(request):
+    eventi = Evento.objects.all().order_by('-data')
+    context = {'eventi': eventi,
+               'pagina_attiva_prossimo_evento': 'active'}
+
+    return render(request, 'calendario/calendario_completo.html', context)
