@@ -8,4 +8,5 @@ urlpatterns = [
     # path("", views.index, name="index"),
     path("", views.prossimo_evento, name="prossimo_evento"),
     path("completo/", views.calendario, name="completo"),
+    path("evento/<int:id>/", views.evento, name="evento"),
 ]

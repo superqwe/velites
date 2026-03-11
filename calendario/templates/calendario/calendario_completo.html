@@ -30,10 +30,10 @@
 
         <tbody>
         {% for evento in eventi %}
-        <tr>
+        <tr onclick="location.href='{% url 'calendario:evento' evento.id %}'">
             <td class="text-center">{{evento.data}}</td>
             <td class="text-center">{{evento.attivita}}</td>
-            <td>{{evento.campo}}</td>
+            <td class="text-center">{{evento.campo}}</td>
         </tr>
         {% endfor %}
         </tbody>
