@@ -46,7 +46,7 @@ def evento2(request, id):
 
 def evento(request, id):
     evento = get_object_or_404(Evento, pk=id)
-    presenze = evento.partecipazioni.all()
+    presenze = evento.partecipazioni.all().order_by('utente__username')
 
     if request.method == 'POST':
         presenza_id = request.POST.get('salva')

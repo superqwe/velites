@@ -39,12 +39,26 @@ def get_attivita_default():
 
 
 class Evento(models.Model):
+    class Conferma(models.TextChoices):
+        CONFERMATO = 'SI', 'Confermato'
+        DA_CONFERMARE = 'FORSE', 'Da Confermare'
+        ANNULLATO = 'NO', 'Annulato'
+
+    print(Conferma.choices)
     data = models.DateField()
     orario = models.TimeField(default=datetime.time(8, 15), null=True, blank=True)
     attivita = models.ForeignKey(Attivita, on_delete=models.CASCADE, default=get_campo_default,
                                  null=True, blank=True)
+    conferma = models.CharField(
+        max_length=5,
+        choices=Conferma.choices,
+        default=Conferma.DA_CONFERMARE,
+        null=True,
+        blank=True,
+    )
     campo = models.ForeignKey(Campo, on_delete=models.CASCADE, default=get_campo_default,
                               null=True, blank=True)
+    note = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['data']
