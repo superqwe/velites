@@ -41,7 +41,9 @@
 
 
     {% if evento.note %}
-    <p><mark><strong>Note:</strong> {{evento.note}}</mark></p>
+    <p>
+        <mark><strong>Note:</strong> {{evento.note}}</mark>
+    </p>
     {% endif %}
 
     <h1>{{evento.get_conferma_display}}</h1>
@@ -82,10 +84,22 @@
                 </td>
             </tr>
             {% endfor %}
-            </tbody>
 
+            {% if evento.nolo_prova %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    +{{evento.nolo_prova}} nolo/prova
+                </td>
+                <td></td>
+            </tr>
+            {% endif %}
+            </tbody>
         </table>
     </form>
+
 
 </div>
 

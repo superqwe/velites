@@ -44,7 +44,6 @@ class Evento(models.Model):
         DA_CONFERMARE = 'FORSE', 'Da Confermare'
         ANNULLATO = 'NO', 'Annulato'
 
-    print(Conferma.choices)
     data = models.DateField()
     orario = models.TimeField(default=datetime.time(8, 15), null=True, blank=True)
     attivita = models.ForeignKey(Attivita, on_delete=models.CASCADE, default=get_campo_default,
@@ -58,6 +57,7 @@ class Evento(models.Model):
     )
     campo = models.ForeignKey(Campo, on_delete=models.CASCADE, default=get_campo_default,
                               null=True, blank=True)
+    nolo_prova = models.IntegerField(default=0, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
 
     class Meta:
