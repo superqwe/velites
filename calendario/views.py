@@ -25,23 +25,24 @@ def prossimo_evento(request):
     return render(request, 'calendario/calendario_completo.html', context)
 
 
-def evento2(request, id):
-    evento = get_object_or_404(Evento, pk=id)
-    # Tutte le presenze
-    presenze = evento.partecipazioni.all()
-
-    # Filtrate per risposta
-    presenti = evento.partecipazioni.filter(risposta=Presenza.Risposta.PARTECIPO)
-    assenti = evento.partecipazioni.filter(risposta=Presenza.Risposta.NON_PARTECIPO)
-    forse = evento.partecipazioni.filter(risposta=Presenza.Risposta.FORSE)
-    context = {'evento': evento,
-               'presenze': presenze,
-               'presenti': presenti,
-               'assenti': assenti,
-               'forse': forse
-               }
-
-    return render(request, 'calendario/evento.html', context)
+# todo: obsoleto
+# def evento2(request, id):
+#     evento = get_object_or_404(Evento, pk=id)
+#     # Tutte le presenze
+#     presenze = evento.partecipazioni.all()
+#
+#     # Filtrate per risposta
+#     presenti = evento.partecipazioni.filter(risposta=Presenza.Risposta.PARTECIPO)
+#     assenti = evento.partecipazioni.filter(risposta=Presenza.Risposta.NON_PARTECIPO)
+#     forse = evento.partecipazioni.filter(risposta=Presenza.Risposta.FORSE)
+#     context = {'evento': evento,
+#                'presenze': presenze,
+#                'presenti': presenti,
+#                'assenti': assenti,
+#                'forse': forse
+#                }
+#
+#     return render(request, 'calendario/evento.html', context)
 
 
 def evento(request, id):

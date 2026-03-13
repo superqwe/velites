@@ -77,6 +77,12 @@ class Evento(models.Model):
             attivita = self.attivita
         return f'{self.data} - {attivita} - {campo}'
 
+    @property
+    def evento_passato(self):
+        if self.data < datetime.date.today():
+            return True
+        return False
+
 
 class Presenza(models.Model):
     class Risposta(models.TextChoices):
