@@ -98,6 +98,7 @@ class Presenza(models.Model):
         null=True,  # null = utente non ha ancora risposto
         blank=True,
     )
+    nota = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         unique_together = ('evento', 'utente')

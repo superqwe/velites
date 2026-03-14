@@ -103,7 +103,7 @@
 
             <tbody>
             {% for presenza in presenze %}
-            <tr>
+            <tr class="align-middle">
                 <td class="text-center">
                     <input type="radio" name="risposta_{{ presenza.id }}" value="SI"
                            {% if presenza.risposta == 'SI' %}checked{% endif %}>
@@ -116,7 +116,10 @@
                     <input type="radio" name="risposta_{{ presenza.id }}" value="FORSE"
                            {% if presenza.risposta == 'FORSE' %}checked{% endif %}>
                 </td>
-                <td>{{ presenza.utente.username }}</td>
+                <td>{{ presenza.utente.username }}<br>
+                    <input type="text" name="nota_{{ presenza.id }}" value="{{ presenza.nota|default:'' }}"
+                           class="form-control form-control-sm">
+                </td>
                 <td>
                     <button type="submit" name="salva" value="{{ presenza.id }}"
                             class="btn btn-sm btn-primary">Salva
