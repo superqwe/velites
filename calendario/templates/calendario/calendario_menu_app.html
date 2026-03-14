@@ -4,9 +4,13 @@
            class="btn btn-outline-primary {{pagina_attiva_prossimo_evento}}">
             Prossimo
         </a>
-        <a href="{% url 'calendario:completo' %}"
-           class="btn btn-outline-primary {{pagina_attiva_calendario_completo}}">
+        <a href="{% url 'calendario:eventi_futuri' %}"
+           class="btn btn-outline-primary {{pagina_attiva_eventi_futuri}}">
             Calendario
+        </a>
+        <a href="{% url 'calendario:eventi_passati' %}"
+           class="btn btn-outline-primary {{pagina_attiva_eventi_passati}}">
+            Storico
         </a>
         <a href="/admin/"
            class="btn btn-outline-primary">

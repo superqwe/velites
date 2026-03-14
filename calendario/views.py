@@ -1,48 +1,37 @@
-from django.http import HttpResponse
-from .models import Evento, Presenza
-from django.conf import settings
+import datetime
+
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect
+
+from .models import Evento, Presenza
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def eventi_futuri(request):
+    eventi_futuri = Evento.objects.filter(data__gte=datetime.date.today()).order_by('data')
+    context = {'eventi': eventi_futuri,
+               'pagina_attiva_eventi_futuri': 'active'}
+
+    return render(request, 'calendario/elenco_eventi.html', context)
 
 
-def calendario(request):
-    eventi = Evento.objects.all().order_by('-data')
-    context = {'eventi': eventi,
-               'pagina_attiva_calendario_completo': 'active'}
+def eventi_passati(request):
+    eventi_passati = Evento.objects.filter(data__lt=datetime.date.today()).order_by('-data')
+    context = {'eventi': eventi_passati,
+               'pagina_attiva_eventi_passati': 'active'}
 
-    return render(request, 'calendario/calendario_completo.html', context)
+    return render(request, 'calendario/elenco_eventi.html', context)
 
 
 def prossimo_evento(request):
-    eventi = Evento.objects.all().order_by('-data')
-    context = {'eventi': eventi,
-               'pagina_attiva_prossimo_evento': 'active'}
+    evento = Evento.objects.filter(data__gte=datetime.date.today()).order_by('data').first()
 
-    return render(request, 'calendario/calendario_completo.html', context)
+    if evento is None:
+        return redirect('home')
 
+    request.session['prossimo'] = 'active'
 
-# todo: obsoleto
-# def evento2(request, id):
-#     evento = get_object_or_404(Evento, pk=id)
-#     # Tutte le presenze
-#     presenze = evento.partecipazioni.all()
-#
-#     # Filtrate per risposta
-#     presenti = evento.partecipazioni.filter(risposta=Presenza.Risposta.PARTECIPO)
-#     assenti = evento.partecipazioni.filter(risposta=Presenza.Risposta.NON_PARTECIPO)
-#     forse = evento.partecipazioni.filter(risposta=Presenza.Risposta.FORSE)
-#     context = {'evento': evento,
-#                'presenze': presenze,
-#                'presenti': presenti,
-#                'assenti': assenti,
-#                'forse': forse
-#                }
-#
-#     return render(request, 'calendario/evento.html', context)
+    return redirect('calendario:evento', id=evento.pk)
 
 
 def evento(request, id):
@@ -60,6 +49,7 @@ def evento(request, id):
     context = {
         "evento": evento,
         "presenze": presenze,
+        "pagina_attiva_prossimo_evento": request.session.pop('prossimo', False),
     }
 
     return render(request, "calendario/evento.html", context)
