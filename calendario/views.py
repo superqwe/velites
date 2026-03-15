@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
 
 from .models import Evento, Presenza
+from .wh import invia_messaggio
 
 
 def prossimo_evento_id():
@@ -47,6 +48,9 @@ def evento(request, id):
         presenza.risposta = nuova_risposta
         presenza.nota = nuova_nota
         presenza.save()
+
+        if prossimo_evento_id() == evento.pk:
+            invia_messaggio(evento, presenze)
 
     context = {
         "evento": evento,
