@@ -22,8 +22,8 @@ GIORNO_SETTIMANA = [
 
 def invia_messaggio(evento, presenze):
     messaggio = formatta_messagio(evento, presenze)
-    # send_group_message(messaggio)
-    print(messaggio)
+    send_group_message(messaggio)
+    # print(messaggio)
 
 
 def formatta_messagio(evento, presenze):
@@ -33,18 +33,22 @@ def formatta_messagio(evento, presenze):
 
     dove = f'{evento.campo} ore {evento.orario.strftime('%H:%M')}'
 
+    n_presenti = presenze.filter(risposta='SI').count()
+    n_assenti = presenze.filter(risposta='NO').count()
+    n_forse = presenze.filter(risposta='FORSE').count()
+
     presenti = '\n'.join(presenze.filter(risposta='SI').values_list('utente__nickname', flat=True))
     assenti = '\n'.join(presenze.filter(risposta='NO').values_list('utente__nickname', flat=True))
     forse = '\n'.join(presenze.filter(risposta='FORSE').values_list('utente__nickname', flat=True))
 
     if presenti:
-        presenti = f'\n\n*PRESENTI*\n{presenti}'
+        presenti = f'\n\n*PRESENTI - {n_presenti}*\n{presenti}'
 
     if assenti:
-        assenti = f'\n\n*ASSENTI*\n{assenti}'
+        assenti = f'\n\n*ASSENTI - {n_assenti}*\n{assenti}'
 
     if forse:
-        forse = f'\n\n*IN FORSE*\n{forse}'
+        forse = f'\n\n*IN FORSE - {n_forse}*\n{forse}'
 
     messaggio = (f'{attivita}\n{dove}'
                  f'{presenti}'
