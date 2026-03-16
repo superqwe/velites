@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1-ymmv@40-4tvq26&mks-wwpw5%lpkqynwumj8)+@2bh$w$(oh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['velites.pythonanywhere.com']
 
 # Application definition
 
