@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1-ymmv@40-4tvq26&mks-wwpw5%lpkqynwumj8)+@2bh$w$(oh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['velites.pythonanywhere.com', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['velites.pythonanywhere.com', '127.0.0.1']
 
 # Application definition
 
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'velites.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'velites/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
