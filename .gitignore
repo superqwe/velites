@@ -1,0 +1,32 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
+### Django template
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+
+
+
+
+
+# Environments
+.env
+.venv
+../env_velites_313/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+velites/*.bat
+
+
+
+
+
+
