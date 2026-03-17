@@ -11,8 +11,8 @@ config = configparser.ConfigParser()
 config.read(os.path.join(Path(__file__).resolve().parent.parent, "config.cfg"))
 
 WHAPI_TOKEN = config["whatsapp"]["token"]
-# WHAPI_GROUP_ID = config["whatsapp"]["group_id_velites"]
-WHAPI_GROUP_ID = config["whatsapp"]["group_id_cancella"]
+WHAPI_GROUP_ID = config["whatsapp"]["group_id_velites"]
+# WHAPI_GROUP_ID = config["whatsapp"]["group_id_cancella"]
 
 GIORNO_SETTIMANA = [
     "Lunedì", "Martedì", "Mercoledì",
