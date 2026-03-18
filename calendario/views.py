@@ -36,8 +36,8 @@ def prossimo_evento(request):
 
 def evento(request, id):
     evento = get_object_or_404(Evento, pk=id)
-
     presenze = evento.partecipazioni.all().order_by('utente__username')
+    messaggio_ok = False
 
     if request.method == 'POST':
         presenza_id = request.POST.get('salva')
@@ -52,9 +52,12 @@ def evento(request, id):
         if prossimo_evento_id() == evento.pk:
             invia_messaggio(evento, presenze)
 
+        messaggio_ok = True
+
     context = {
         "evento": evento,
         "presenze": presenze,
+        "messaggio_ok": messaggio_ok,
     }
 
     if prossimo_evento_id() == evento.pk:

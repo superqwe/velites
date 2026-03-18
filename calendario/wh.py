@@ -1,5 +1,6 @@
 import configparser
 import os
+import socket
 from pathlib import Path
 
 import requests
@@ -11,8 +12,12 @@ config = configparser.ConfigParser()
 config.read(os.path.join(Path(__file__).resolve().parent.parent, "config.cfg"))
 
 WHAPI_TOKEN = config["whatsapp"]["token"]
-WHAPI_GROUP_ID = config["whatsapp"]["group_id_velites"]
-# WHAPI_GROUP_ID = config["whatsapp"]["group_id_cancella"]
+
+NOME_COMPUTER = socket.gethostname()
+if NOME_COMPUTER.lower() == 'desktop-8g2ro2g':
+    WHAPI_GROUP_ID = config["whatsapp"]["group_id_cancella"]
+else:
+    WHAPI_GROUP_ID = config["whatsapp"]["group_id_velites"]
 
 GIORNO_SETTIMANA = [
     "Lunedì", "Martedì", "Mercoledì",
