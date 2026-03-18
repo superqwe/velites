@@ -5,7 +5,7 @@ from .models import Evento, Campo, Presenza, Attivita
 
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
-    list_display = ('data', 'conferma','orario', 'attivita', 'campo', 'note')
+    list_display = ('data', 'conferma', 'orario', 'attivita', 'campo', 'note')
     list_filter = ('attivita',)
     ordering = ('-data',)
     search_fields = ('data',)
@@ -13,9 +13,10 @@ class EventoAdmin(admin.ModelAdmin):
 
 @admin.register(Presenza)
 class PresenzaAdmin(admin.ModelAdmin):
-    list_display = ('evento__data','evento__attivita', 'evento__campo', 'utente', 'risposta')
+    date_hierarchy = 'evento__data'
+    list_display = ('evento__data', 'evento__attivita', 'evento__campo', 'utente__nickname', 'risposta')
     list_filter = ('utente', 'risposta')
-    ordering = ( 'evento__data', 'risposta', 'utente' )
+    ordering = ('-evento__data', 'risposta', 'utente__nickname')
 
 
 admin.site.register(Attivita)
