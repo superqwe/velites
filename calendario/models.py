@@ -3,6 +3,8 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from .wh import invia_messaggio, formatta_messagio, send_group_message
+
 User = get_user_model()
 
 
@@ -59,6 +61,27 @@ class Evento(models.Model):
                               null=True, blank=True)
     nolo_prova = models.IntegerField(default=0, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        conferma_cambiata = False
+        vecchia_conferma = None
+
+        if self.pk:
+            vecchio = Evento.objects.get(pk=self.pk)
+            if vecchio.conferma != self.conferma:
+                conferma_cambiata = True
+                vecchia_conferma = vecchio.conferma
+
+        super().save(*args, **kwargs)
+
+        if conferma_cambiata:
+            self.gestisci_cambio_conferma()
+
+    def gestisci_cambio_conferma(self):
+        presenze = self.partecipazioni.all()
+        messaggio = formatta_messagio(self, presenze, conferma=self.conferma)
+        # print(messaggio)
+        send_group_message(messaggio)
 
     class Meta:
         ordering = ['data']

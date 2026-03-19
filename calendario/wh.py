@@ -31,12 +31,26 @@ def invia_messaggio(evento, presenze):
     # print(messaggio)
 
 
-def formatta_messagio(evento, presenze):
+def formatta_messagio(evento, presenze, conferma=None):
+    if conferma == 'SI':
+        stato = '*EVENTO CONFERMATO*\n'
+    elif conferma == 'NO':
+        stato = '*EVENTO ANNULLATO*\n'
+    elif conferma == 'FORSE':
+        stato = '*EVENTO DA CONFERMARE*\n'
+    else:
+        stato = ''
+
     attivita = (f'*{evento.attivita} '
                 f'{GIORNO_SETTIMANA[evento.data.weekday()]} '
                 f'{evento.data.strftime('%d/%m/%y')}*')
 
     dove = f'{evento.campo} ore {evento.orario.strftime('%H:%M')}'
+
+    intestazione = f'{stato}{attivita}\n{dove}'
+
+    if conferma == 'NO':
+        return intestazione
 
     n_presenti = presenze.filter(risposta='SI').count()
     n_assenti = presenze.filter(risposta='NO').count()
@@ -48,14 +62,12 @@ def formatta_messagio(evento, presenze):
 
     if presenti:
         presenti = f'\n\n*PRESENTI - {n_presenti}*\n{presenti}'
-
     if assenti:
         assenti = f'\n\n*ASSENTI - {n_assenti}*\n{assenti}'
-
     if forse:
         forse = f'\n\n*IN FORSE - {n_forse}*\n{forse}'
 
-    messaggio = (f'{attivita}\n{dove}'
+    messaggio = (f'{intestazione}'
                  f'{presenti}'
                  f'{assenti}'
                  f'{forse}')
