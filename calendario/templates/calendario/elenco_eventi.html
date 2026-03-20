@@ -17,30 +17,70 @@
 
 {% load static %}
 
+<!-- vecchio template -->
+<!--<div>-->
+<!--    <table class="table table-striped table-sm">-->
+<!--        <thead class="table-light sticky-top">-->
+<!--        <tr class="text-center">-->
+<!--            <th scope="col">S/N</th>-->
+<!--            <th scope="col">Data</th>-->
+<!--            <th scope="col">Attività</th>-->
+<!--            <th scope="col">Campo</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
 
-<div>
-    <table class="table table-striped table-sm">
-        <thead class="table-light sticky-top">
-        <tr class="text-center">
-            <th scope="col">S/N</th>
-            <th scope="col">Data</th>
-            <th scope="col">Attività</th>
-            <th scope="col">Campo</th>
-        </tr>
-        </thead>
+<!--        <tbody>-->
+<!--        {% for evento in eventi %}-->
+<!--        <tr onclick="location.href='{% url 'calendario:evento' evento.id %}'">-->
+<!--            <td class="text-center">{{evento.conferma}}</td>-->
+<!--            <td class="text-center">{{evento.data}}</td>-->
+<!--            <td class="text-center">{{evento.attivita}}</td>-->
+<!--            <td class="text-center">{{evento.campo}}</td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--        </tbody>-->
 
-        <tbody>
-        {% for evento in eventi %}
-        <tr onclick="location.href='{% url 'calendario:evento' evento.id %}'">
-            <td class="text-center">{{evento.conferma}}</td>
-            <td class="text-center">{{evento.data}}</td>
-            <td class="text-center">{{evento.attivita}}</td>
-            <td class="text-center">{{evento.campo}}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
+<!--    </table>-->
+<!--</div>-->
 
-    </table>
+{% for evento in eventi %}
+<div class="card mb-1" onclick="location.href='{% url 'calendario:evento' evento.id %}'">
+    <div class="row g-0 align-items-center h-100">
+        <div class="col-2 border text-center h-100 text-white {{evento.colore_evento}}">
+            <h1 class="card-title">{{evento.data|date:"d"}}</h1>
+            <p class="card-text">{{evento.data|date:"M"|upper}} <br>
+                <small>{{evento.orario}}</small></p>
+        </div>
+        <div class="col-10">
+            <div class="card-body">
+                <h1 class="card-title">{{evento.attivita}}</h1>
+                <p class="card-text">{{evento.campo}} <br>
+                    {% if evento.note %}
+                    <mark>{{ evento.note }}</mark>
+                    <br>
+                    {% endif %}
+                    <small>
+                        {% if evento.n_presenti %}
+                        <span class="badge text-bg-success">{{evento.n_presenti}}</span>
+                        {% endif %}
+                        {% if evento.nolo_prova %}
+                        <span class="badge text-bg-primary">{{evento.nolo_prova}}</span>
+                        {% endif %}
+                        {% if evento.n_assenti %}
+                        <span class="badge text-bg-danger">{{evento.n_assenti}}</span>
+                        {% endif %}
+                        {% if evento.n_forse %}
+                        <span class="badge text-bg-secondary">{{evento.n_forse}}</span>
+                        {% endif %}
+                        {% if evento.n_non_risposto %}
+                        <span class="badge text-bg-dark">{{evento.n_non_risposto}}</span>
+                        {% endif %}
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
+{% endfor %}
 
 {% endblock %}

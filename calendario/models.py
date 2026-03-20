@@ -1,4 +1,5 @@
 import datetime
+from unittest import case
 
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -105,6 +106,32 @@ class Evento(models.Model):
         if self.data < datetime.date.today():
             return True
         return False
+
+    @property
+    def colore_evento(self):
+        match self.conferma:
+            case 'SI':
+                return 'bg-success'
+            case 'FORSE':
+                return 'bg-primary'
+            case 'NO':
+                return 'bg-danger'
+
+    @property
+    def n_presenti(self):
+        return self.partecipazioni.filter(risposta='SI').count()
+
+    @property
+    def n_assenti(self):
+        return self.partecipazioni.filter(risposta='NO').count()
+
+    @property
+    def n_forse(self):
+        return self.partecipazioni.filter(risposta='FORSE').count()
+
+    @property
+    def n_non_risposto(self):
+        return self.partecipazioni.filter(risposta__isnull=True).count()
 
 
 class Presenza(models.Model):
