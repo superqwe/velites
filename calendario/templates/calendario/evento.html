@@ -89,12 +89,12 @@
             </td>
             <td class="text-center">
                 {% if presenza.risposta == 'NO' %}
-                <i class="fa-solid fa-circle-check text-danger"></i>
+                <i class="fa-solid fa-circle-xmark text-danger"></i>
                 {% endif %}
             </td>
             <td class="text-center">
                 {% if presenza.risposta == 'FORSE' %}
-                <i class="fa-solid fa-circle-check text-secondary"></i>
+                <i class="fa-solid fa-circle-question text-secondary"></i>
                 {% endif %}
             </td>
             <td>{{ presenza.utente.username }}
@@ -108,7 +108,7 @@
         {%endfor%}
         {% if evento.nolo_prova %}
         <tr>
-            <td class="text-center">✓</td>
+            <td class="text-center"><i class="fa-solid fa-circle-plus text-success"></i></td>
             <td></td>
             <td></td>
             <td>
@@ -121,6 +121,7 @@
     </table>
 
     {% else %}
+
 
 <!-- evento editabile -->
     <form method="post">
@@ -167,8 +168,6 @@
             {%endif%}
 
 
-
-
             {% for presenza in presenze_altri_utenti %}
             <tr class="align-middle">
                 <td class="text-center">
@@ -178,12 +177,12 @@
             </td>
             <td class="text-center">
                 {% if presenza.risposta == 'NO' %}
-                <i class="fa-solid fa-circle-check text-danger"></i>
+                <i class="fa-solid fa-circle-xmark text-danger"></i>
                 {% endif %}
             </td>
             <td class="text-center">
                 {% if presenza.risposta == 'FORSE' %}
-                <i class="fa-solid fa-circle-check text-secondary"></i>
+                <i class="fa-solid fa-circle-question text-secondary"></i>
                 {% endif %}
             </td>
                 <td>{{ presenza.utente.username }}
@@ -198,7 +197,7 @@
 
             {% if evento.nolo_prova %}
             <tr>
-                <td class="text-center">✓</td>
+                <td class="text-center"><i class="fa-solid fa-circle-plus text-success"></i></td>
                 <td></td>
                 <td></td>
                 <td>
