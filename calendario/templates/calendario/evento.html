@@ -80,12 +80,29 @@
         </thead>
 
         <tbody>
-        {% for presenza in presenze %}
+        {% for presenza in presenze_tutti %}
         <tr>
-            <td class="text-center">{% if presenza.risposta == 'SI' %}✓{% endif %}</td>
-            <td class="text-center">{% if presenza.risposta == 'NO' %}✓{% endif %}</td>
-            <td class="text-center">{% if presenza.risposta == 'FORSE' %}✓{% endif %}</td>
-            <td>{{ presenza.utente.username }}</td>
+            <td class="text-center">
+                {% if presenza.risposta == 'SI' %}
+                <i class="fa-solid fa-circle-check text-success"></i>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if presenza.risposta == 'NO' %}
+                <i class="fa-solid fa-circle-check text-danger"></i>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if presenza.risposta == 'FORSE' %}
+                <i class="fa-solid fa-circle-check text-secondary"></i>
+                {% endif %}
+            </td>
+            <td>{{ presenza.utente.username }}
+                {% if presenza.nota %}
+                <br>
+                <mark>{{ presenza.nota }}</mark>
+                {% endif %}
+            </td>
         </tr>
 
         {%endfor%}
@@ -120,35 +137,62 @@
             </thead>
 
             <tbody>
-            {% for presenza in presenze %}
+
+            {% if presenza_utente %}
             <tr class="align-middle">
                 <td class="text-center">
-                    <input type="radio" name="risposta_{{ presenza.id }}" value="SI"
-                           {% if presenza.risposta == 'SI' %}checked{% endif %}
-                           {% if presenza.utente != request.user %}disabled{% endif %}>
+                    <input type="radio" name="risposta_{{ presenza_utente.id }}" value="SI"
+                           {% if presenza_utente.risposta == 'SI' %}checked{% endif %} >
                 </td>
                 <td class="text-center">
-                    <input type="radio" name="risposta_{{ presenza.id }}" value="NO"
-                           {% if presenza.risposta == 'NO' %}checked{% endif %}
-                           {% if presenza.utente != request.user %}disabled{% endif %}>
+                    <input type="radio" name="risposta_{{ presenza_utente.id }}" value="NO"
+                           {% if presenza_utente.risposta == 'NO' %}checked{% endif %} >
                 </td>
                 <td class="text-center">
-                    <input type="radio" name="risposta_{{ presenza.id }}" value="FORSE"
-                           {% if presenza.risposta == 'FORSE' %}checked{% endif %}
-                           {% if presenza.utente != request.user %}disabled{% endif %}>
+                    <input type="radio" name="risposta_{{ presenza_utente.id }}" value="FORSE"
+                           {% if presenza_utente.risposta == 'FORSE' %}checked{% endif %} >
                 </td>
-                <td>{{ presenza.utente.username }}<br>
-                    <input type="text" name="nota_{{ presenza.id }}" value="{{ presenza.nota|default:'' }}"
-                           class="form-control form-control-sm"
-                           {% if presenza.utente != request.user %}disabled{% endif %}>
+                <td>{{ presenza_utente.utente.username }}<br>
+                    <input type="text" name="nota_{{ presenza_utente.id }}"
+                           value="{{ presenza_utente.nota|default:'' }}"
+                           class="form-control form-control-sm">
                 </td>
                 <td>
-                    <button type="submit" name="salva" value="{{ presenza.id }}"
-                            class="btn btn-sm btn-primary"
-                            {% if presenza.utente != request.user %}disabled{% endif %}>
+                    <button type="submit" name="salva" value="{{ presenza_utente.id }}"
+                            class="btn btn-sm btn-primary">
                         Salva
                     </button>
                 </td>
+            </tr>
+            {%endif%}
+
+
+
+
+            {% for presenza in presenze_altri_utenti %}
+            <tr class="align-middle">
+                <td class="text-center">
+                {% if presenza.risposta == 'SI' %}
+                <i class="fa-solid fa-circle-check text-success"></i>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if presenza.risposta == 'NO' %}
+                <i class="fa-solid fa-circle-check text-danger"></i>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if presenza.risposta == 'FORSE' %}
+                <i class="fa-solid fa-circle-check text-secondary"></i>
+                {% endif %}
+            </td>
+                <td>{{ presenza.utente.username }}
+                    {% if presenza.nota %}
+                    <br>
+                    <mark>{{ presenza.nota }}</mark>
+                    {% endif %}
+                </td>
+                <td></td>
             </tr>
             {% endfor %}
 
@@ -163,6 +207,7 @@
                 <td></td>
             </tr>
             {% endif %}
+
             </tbody>
         </table>
     </form>
@@ -170,9 +215,6 @@
     {% endif %}
 
 </div>
-
-
-
 
 
 {% endblock %}
