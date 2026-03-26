@@ -44,7 +44,7 @@
 <!--</div>-->
 
 {% for evento in eventi %}
-<div class="card mb-1" onclick="location.href='{% url 'calendario:evento' evento.id %}'">
+<div class="card mb-2 bg-light" onclick="location.href='{% url 'calendario:evento' evento.id %}'">
     <div class="row g-0 align-items-center h-100">
         <div class="col-2 border text-center h-100 text-white {{evento.colore_evento}}">
             <h1 class="card-title">{{evento.data|date:"d"}}</h1>
