@@ -6,6 +6,8 @@ from pathlib import Path
 import requests
 from icecream import ic
 
+from django.db.models import Q
+
 config = configparser.ConfigParser()
 config.read(os.path.join(Path(__file__).resolve().parent.parent, "config.cfg"))
 
@@ -72,7 +74,19 @@ def formatta_messagio(evento, presenze, conferma=None, msg_automatico=False):
                  f'{assenti}'
                  f'{forse}')
 
-    ic(messaggio)
+    match msg_automatico:
+        case 'lunedi':
+            messaggio = f'*POSTATE LE PRESENZE*\n{messaggio}'
+
+        case 'venerdi':
+            presenze_incerte = evento.partecipazioni.filter(Q(risposta='FORSE') | Q(risposta__isnull=True))
+            ic(presenze_incerte)
+
+            n_presenze_incerte = presenze_incerte.count()
+            if n_presenze_incerte:
+                msg_presenze_incerte = ', '.join(presenze_incerte.values_list('utente__nickname', flat=True))
+                messaggio = f'{msg_presenze_incerte} forza con le presenze?'
+
     return messaggio
 
 

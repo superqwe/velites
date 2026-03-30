@@ -24,10 +24,10 @@ def messaggio_automatico(giorno_della_settimana):
 
     evento = Evento.objects.filter(data=tra_n_giorni).first()
 
-    try:
-        ic(tra_n_giorni, giorno_della_settimana, evento.conferma)
-    except AttributeError:
-        ic(tra_n_giorni, giorno_della_settimana, None)
+    # try:
+    #     ic(tra_n_giorni, giorno_della_settimana, evento.conferma)
+    # except AttributeError:
+    #     ic(tra_n_giorni, giorno_della_settimana, None)
 
     if evento and evento.conferma != 'NO':
         presenze = evento.partecipazioni.all().order_by('utente__username')
@@ -41,8 +41,8 @@ def start():
         messaggio_automatico,
         'cron',
         day_of_week='mon',
-        hour=21,
-        minute=55,
+        hour=8,
+        minute=0,
         id='messaggio_automatico',
         replace_existing=True,
         kwargs={'giorno_della_settimana': 'lunedi'},
@@ -52,20 +52,20 @@ def start():
         messaggio_automatico,
         'cron',
         day_of_week='fri',
-        hour=21,
-        minute=55,
+        hour=8,
+        minute=0,
         id='messaggio_automatico',
         replace_existing=True,
         kwargs={'giorno_della_settimana': 'venerdi'},
     )
 
-    scheduler.add_job(
-        messaggio_automatico,
-        'interval',
-        seconds=5,
-        id='test',
-        replace_existing=True,
-        kwargs={'giorno_della_settimana': 'venerdi'},
-    )
+    # scheduler.add_job(
+    #     messaggio_automatico,
+    #     'interval',
+    #     seconds=10,
+    #     id='test',
+    #     replace_existing=True,
+    #     kwargs={'giorno_della_settimana': 'lunedi'},
+    # )
 
     scheduler.start()
