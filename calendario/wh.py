@@ -27,8 +27,8 @@ GIORNO_SETTIMANA = [
 
 def invia_messaggio(evento, presenze, msg_automatico=False):
     messaggio = formatta_messagio(evento, presenze, msg_automatico=msg_automatico)
-    # send_group_message(messaggio)
-    print(messaggio)
+    send_group_message(messaggio)
+    # print(messaggio)
 
 
 def formatta_messagio(evento, presenze, conferma=None, msg_automatico=False):

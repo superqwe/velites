@@ -2,6 +2,7 @@ import datetime
 
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 
 from .models import Evento, Presenza
 from .wh import invia_messaggio
@@ -34,6 +35,7 @@ def prossimo_evento(request):
 
 
 def evento2(request, id):
+    # todo: obsoleto --> cancellare
     utente = request.user
     evento = get_object_or_404(Evento, pk=id)
     presenze = evento.partecipazioni.all().order_by('utente__username')
@@ -88,14 +90,19 @@ def evento(request, id):
         if prossimo_evento_id() == evento.pk:
             invia_messaggio(evento, presenze_tutti)
 
-        messaggio_ok = True
+        messages.success(request, 'Presenza salvata')
+
+        return redirect('calendario:evento', id=id)
+
+
+        # messaggio_ok = True
 
     context = {
         "evento": evento,
         "presenze_altri_utenti": presenze_altri_utenti,
         "presenza_utente": presenza_utente,
         'presenze_tutti':presenze_tutti,
-        "messaggio_ok": messaggio_ok,
+        # "messaggio_ok": messaggio_ok,
     }
 
     if prossimo_evento_id() == evento.pk:

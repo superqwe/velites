@@ -17,22 +17,37 @@
 
 {% load static %}
 
-{% if messaggio_ok %}
-<div id="popup-ok" class="alert alert-success alert-dismissible position-fixed top-0 start-50 translate-middle-x mt-3 shadow"
+<!--{% if messaggio_ok %}-->
+<!--<div id="popup-ok" class="alert alert-success alert-dismissible position-fixed top-0 start-50 translate-middle-x mt-3 shadow"-->
+<!--     style="z-index: 9999; min-width: 250px; text-align: center;">-->
+<!--    Presenza Salvata-->
+<!--    <button type="button" class="btn-close" onclick="chiudiPopup()"></button>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    setTimeout(chiudiPopup, 5000);-->
+
+<!--    function chiudiPopup() {-->
+<!--        const popup = document.getElementById("popup-ok");-->
+<!--        if (popup) popup.style.display = "none";-->
+<!--    }-->
+<!--</script>-->
+<!--{% endif %}-->
+
+{% if messages %}
+{% for message in messages %}
+<div id="popup-ok" class="alert alert-success position-fixed top-50 start-50 translate-middle shadow"
      style="z-index: 9999; min-width: 250px; text-align: center;">
     Presenza Salvata
-    <button type="button" class="btn-close" onclick="chiudiPopup()"></button>
 </div>
-
+{{ message }}
+</div>
 <script>
-    setTimeout(chiudiPopup, 5000);
-
-    function chiudiPopup() {
-        const popup = document.getElementById("popup-ok");
-        if (popup) popup.style.display = "none";
-    }
+    setTimeout(() => document.getElementById("popup-ok").style.display = "none", 3000);
 </script>
+{% endfor %}
 {% endif %}
+
 
 
 
