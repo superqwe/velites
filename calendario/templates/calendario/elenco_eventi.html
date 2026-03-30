@@ -56,7 +56,7 @@
                 <h1 class="card-title">{{evento.attivita}}</h1>
                 <p class="card-text">{{evento.campo}} <br>
                     {% if evento.note %}
-                    <mark>{{ evento.note }}</mark>
+                    <mark>{{ evento.note|linebreaksbr }}</mark>
                     <br>
                     {% endif %}
                     <small>

@@ -4,9 +4,7 @@ import socket
 from pathlib import Path
 
 import requests
-
-# APScheduler
-
+from icecream import ic
 
 config = configparser.ConfigParser()
 config.read(os.path.join(Path(__file__).resolve().parent.parent, "config.cfg"))
@@ -25,13 +23,13 @@ GIORNO_SETTIMANA = [
 ]
 
 
-def invia_messaggio(evento, presenze):
-    messaggio = formatta_messagio(evento, presenze)
-    send_group_message(messaggio)
-    # print(messaggio)
+def invia_messaggio(evento, presenze, msg_automatico=False):
+    messaggio = formatta_messagio(evento, presenze, msg_automatico=msg_automatico)
+    # send_group_message(messaggio)
+    print(messaggio)
 
 
-def formatta_messagio(evento, presenze, conferma=None):
+def formatta_messagio(evento, presenze, conferma=None, msg_automatico=False):
     if conferma == 'SI':
         stato = '*EVENTO CONFERMATO*\n'
     elif conferma == 'NO':
@@ -74,6 +72,7 @@ def formatta_messagio(evento, presenze, conferma=None):
                  f'{assenti}'
                  f'{forse}')
 
+    ic(messaggio)
     return messaggio
 
 

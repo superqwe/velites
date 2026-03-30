@@ -60,7 +60,7 @@
 
     {% if evento.note %}
     <p>
-        <mark><strong>Note:</strong> {{evento.note}}</mark>
+        <mark><strong>Note:</strong> {{evento.note|linebreaksbr}}</mark>
     </p>
     {% endif %}
 
@@ -100,7 +100,7 @@
             <td>{{ presenza.utente.username }}
                 {% if presenza.nota %}
                 <br>
-                <mark>{{ presenza.nota }}</mark>
+                <mark>{{ presenza.nota|linebreaksbr }}</mark>
                 {% endif %}
             </td>
         </tr>
