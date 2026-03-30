@@ -94,14 +94,13 @@ def evento(request, id):
 
         return redirect('calendario:evento', id=id)
 
-
         # messaggio_ok = True
 
     context = {
         "evento": evento,
         "presenze_altri_utenti": presenze_altri_utenti,
         "presenza_utente": presenza_utente,
-        'presenze_tutti':presenze_tutti,
+        'presenze_tutti': presenze_tutti,
         # "messaggio_ok": messaggio_ok,
     }
 

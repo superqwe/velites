@@ -1,12 +1,13 @@
 from datetime import date, timedelta
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from icecream import ic
 
 from .models import Evento
 from .wh import invia_messaggio
 
-from datetime import datetime
+from icecream import ic
 
 
 def test():
@@ -24,18 +25,13 @@ def messaggio_automatico(giorno_della_settimana):
 
     evento = Evento.objects.filter(data=tra_n_giorni).first()
 
-    # try:
-    #     ic(tra_n_giorni, giorno_della_settimana, evento.conferma)
-    # except AttributeError:
-    #     ic(tra_n_giorni, giorno_della_settimana, None)
-
     if evento and evento.conferma != 'NO':
         presenze = evento.partecipazioni.all().order_by('utente__username')
         invia_messaggio(evento, presenze, msg_automatico=giorno_della_settimana)
 
 
 def start():
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler(timezone=ZoneInfo('Europe/Rome'))
 
     scheduler.add_job(
         messaggio_automatico,
@@ -60,12 +56,11 @@ def start():
     )
 
     # scheduler.add_job(
-    #     messaggio_automatico,
+    #     test,
     #     'interval',
     #     seconds=10,
     #     id='test',
     #     replace_existing=True,
-    #     kwargs={'giorno_della_settimana': 'lunedi'},
     # )
 
     scheduler.start()
