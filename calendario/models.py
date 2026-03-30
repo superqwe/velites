@@ -79,7 +79,7 @@ class Evento(models.Model):
             self.gestisci_cambio_conferma()
 
     def gestisci_cambio_conferma(self):
-        presenze = self.partecipazioni.all()
+        presenze = self.partecipazioni.all().order_by('utente__nickname')
         messaggio = formatta_messagio(self, presenze, conferma=self.conferma)
         # print(messaggio)
         send_group_message(messaggio)
