@@ -74,34 +74,40 @@ def evento(request, id):
     presenze_tutti = evento.partecipazioni.all().order_by('utente__username')
     presenze_altri_utenti = evento.partecipazioni.exclude(utente=request.user).order_by('utente__username')
     presenza_utente = Presenza.objects.filter(evento=evento, utente=request.user).first()
-    # presenza_utente = get_object_or_404(Presenza, evento=evento, utente=request.user)
-    messaggio_ok = False
+    is_gestore = request.user.groups.filter(name='Gestore').exists()
 
     if request.method == 'POST':
-        presenza_id = request.POST.get('salva')
-        nuova_risposta = request.POST.get(f'risposta_{presenza_id}')
-        nuova_nota = request.POST.get(f'nota_{presenza_id}')
 
-        presenza = get_object_or_404(Presenza, pk=presenza_id)
-        presenza.risposta = nuova_risposta
-        presenza.nota = nuova_nota
-        presenza.save()
+        if 'salva_conferma' in request.POST and is_gestore:
+            nuova_conferma = request.POST.get('nuova_conferma')
+            evento.conferma = nuova_conferma
+            evento.save()
+            messages.success(request, 'Stato evento aggiornato')
+            return redirect('calendario:evento', id=id)
 
-        if prossimo_evento_id() == evento.pk:
-            invia_messaggio(evento, presenze_tutti)
+        elif 'salva' in request.POST:
+            presenza_id = request.POST.get('salva')
+            nuova_risposta = request.POST.get(f'risposta_{presenza_id}')
+            nuova_nota = request.POST.get(f'nota_{presenza_id}')
 
-        messages.success(request, 'Presenza salvata')
+            presenza = get_object_or_404(Presenza, pk=presenza_id)
+            presenza.risposta = nuova_risposta
+            presenza.nota = nuova_nota
+            presenza.save()
 
-        return redirect('calendario:evento', id=id)
+            if prossimo_evento_id() == evento.pk:
+                invia_messaggio(evento, presenze_tutti)
 
-        # messaggio_ok = True
+            messages.success(request, 'Presenza salvata')
+
+            return redirect('calendario:evento', id=id)
 
     context = {
         "evento": evento,
         "presenze_altri_utenti": presenze_altri_utenti,
         "presenza_utente": presenza_utente,
         'presenze_tutti': presenze_tutti,
-        # "messaggio_ok": messaggio_ok,
+        'is_gestore': is_gestore,
     }
 
     if prossimo_evento_id() == evento.pk:

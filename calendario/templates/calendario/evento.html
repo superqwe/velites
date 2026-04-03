@@ -17,38 +17,19 @@
 
 {% load static %}
 
-<!--{% if messaggio_ok %}-->
-<!--<div id="popup-ok" class="alert alert-success alert-dismissible position-fixed top-0 start-50 translate-middle-x mt-3 shadow"-->
-<!--     style="z-index: 9999; min-width: 250px; text-align: center;">-->
-<!--    Presenza Salvata-->
-<!--    <button type="button" class="btn-close" onclick="chiudiPopup()"></button>-->
-<!--</div>-->
 
-<!--<script>-->
-<!--    setTimeout(chiudiPopup, 5000);-->
-
-<!--    function chiudiPopup() {-->
-<!--        const popup = document.getElementById("popup-ok");-->
-<!--        if (popup) popup.style.display = "none";-->
-<!--    }-->
-<!--</script>-->
-<!--{% endif %}-->
 
 {% if messages %}
 {% for message in messages %}
 <div id="popup-ok" class="alert alert-success position-fixed top-50 start-50 translate-middle shadow"
      style="z-index: 9999; min-width: 250px; text-align: center;">
-    Presenza Salvata
-</div>
-{{ message }}
+    {{ message }}
 </div>
 <script>
     setTimeout(() => document.getElementById("popup-ok").style.display = "none", 3000);
 </script>
 {% endfor %}
 {% endif %}
-
-
 
 
 <div>
@@ -79,7 +60,24 @@
     </p>
     {% endif %}
 
+
     <h1 class="{{evento.colore_evento}} text-white text-center">{{evento.get_conferma_display|upper}}</h1>
+
+    {% if is_gestore %}
+    <form method="post" class="d-flex justify-content-center gap-2 my-2">
+        {% csrf_token %}
+        <select name="nuova_conferma" class="form-select form-select-sm w-auto">
+            {% for value, label in evento.Conferma.choices %}
+            <option value="{{ value }}" {% if evento.conferma == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="salva_conferma" class="btn btn-sm btn-primary">
+            Salva
+        </button>
+    </form>
+    {% endif %}
 
 
 <!-- evento non editabile-->
