@@ -142,7 +142,7 @@
         <table class="table table-striped table-sm">
             <thead class="table-light sticky-top">
             <tr class="text-center">
-                <th scope="col">Si</th>
+                <th scope="col">Sì</th>
                 <th scope="col">No</th>
                 <th scope="col">?</th>
                 <th scope="col"></th>
@@ -155,16 +155,29 @@
             {% if presenza_utente %}
             <tr class="align-middle">
                 <td class="text-center">
-                    <input type="radio" name="risposta_{{ presenza_utente.id }}" value="SI"
-                           {% if presenza_utente.risposta == 'SI' %}checked{% endif %} >
+                    <input type="radio" class="btn-check" name="risposta_{{ presenza_utente.id }}"
+                           id="si_{{ presenza_utente.id }}" value="SI" autocomplete="off"
+                           {% if presenza_utente.risposta == 'SI' %}checked{% endif %}>
+                    <label class="btn btn-outline-success btn-sm" for="si_{{ presenza_utente.id }}">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </label>
                 </td>
                 <td class="text-center">
-                    <input type="radio" name="risposta_{{ presenza_utente.id }}" value="NO"
-                           {% if presenza_utente.risposta == 'NO' %}checked{% endif %} >
+                    <input type="radio" class="btn-check" name="risposta_{{ presenza_utente.id }}"
+                           id="no_{{ presenza_utente.id }}" value="NO" autocomplete="off"
+                           {% if presenza_utente.risposta == 'NO' %}checked{% endif %}>
+                    <label class="btn btn-outline-danger btn-sm" for="no_{{ presenza_utente.id }}">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </label>
                 </td>
                 <td class="text-center">
-                    <input type="radio" name="risposta_{{ presenza_utente.id }}" value="FORSE"
-                           {% if presenza_utente.risposta == 'FORSE' %}checked{% endif %} >
+                    <input type="radio" class="btn-check" name="risposta_{{ presenza_utente.id }}"
+                           id="forse_{{ presenza_utente.id }}" value="FORSE" autocomplete="off"
+                           {% if presenza_utente.risposta == 'FORSE' %}checked{% endif %}>
+                    <label class="btn btn-outline-secondary btn-sm"
+                           for="forse_{{ presenza_utente.id }}">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </label>
                 </td>
                 <td>{{ presenza_utente.utente.username }}<br>
                     <input type="text" name="nota_{{ presenza_utente.id }}"
@@ -178,7 +191,7 @@
                     </button>
                 </td>
             </tr>
-            {%endif%}
+            {% endif %}
 
 
             {% for presenza in presenze_altri_utenti %}
