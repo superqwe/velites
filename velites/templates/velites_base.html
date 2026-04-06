@@ -33,23 +33,12 @@
 
 <div class="container-fluid">
     <div class="row">
-
-        <div class="col">
-            <h1>
-                {% block titolo %}
-                {{titolo}}
-                {% endblock %}
-            </h1>
-        </div>
-
         {% block menu_app %}
         {% endblock %}
-
     </div>
 
     <div class="row">
-        {% block menu_sezione %}
-        Menu sezione
+        {% block menu_preferenze %}
         {% endblock %}
     </div>
 
