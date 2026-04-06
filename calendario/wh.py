@@ -47,7 +47,10 @@ def formatta_messagio(evento, presenze, conferma=None, msg_automatico=False):
 
     dove = f'{evento.campo} ore {evento.orario.strftime('%H:%M')}'
 
-    note = f'Note: _{evento.note.replace('\n', '_ \n_')}_'
+    if evento.note:
+        note = f'Note: _{evento.note.replace('\n', '_ \n_')}_'
+    else:
+        note = ''
 
     intestazione = f'{stato}{attivita}\n{dove}\n{note}'
 
