@@ -1,0 +1,77 @@
+<div class="d-flex mb-3">
+    <button class="btn btn-outline-primary w-50" data-bs-toggle="collapse"
+            data-bs-target="#collapseNotifiche">
+        Notifiche
+    </button>
+    <button class="btn btn-outline-primary w-50" data-bs-toggle="collapse"
+            data-bs-target="#collapsePreferenze">
+        Preferenze
+    </button>
+</div>
+
+<div class="collapse mb-3" id="collapseNotifiche">
+    <div class="card card-body">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <button disabled><i class="fa-brands fa-whatsapp"></i> Invia "Postate presenze"</button>
+            </li>
+
+            <li class="list-group-item">
+                <button disabled><i class="fa-brands fa-whatsapp"></i> Sollecita "in forse"</button>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="collapse mb-3" id="collapsePreferenze">
+    <div class="card card-body">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <form method="post" class="d-flex  gap-2 my-2">
+                    {% csrf_token %}
+                    Stato evento
+                    <select name="nuova_conferma" class="form-select form-select-sm w-auto">
+                        {% for value, label in evento.Conferma.choices %}
+                        <option value="{{ value }}" {% if evento.conferma == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" name="salva_conferma" class="btn btn-sm btn-primary">
+                        Salva
+                    </button>
+                </form>
+            </li>
+
+            <li class="list-group-item">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" disabled>
+                    <label class="form-check-label" for="switchCheckDefault">
+                        Invia sempre notifica <i class="fa-brands fa-whatsapp"></i>
+                    </label>
+                </div>
+            </li>
+
+            <li class="list-group-item text-center">
+                <button type="submit" name="salva_preferenze" class="btn btn-sm btn-primary" disabled>
+                    Salva preferenze
+                </button>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(trigger => {
+        trigger.addEventListener('click', function () {
+            const targetId = this.dataset.bsTarget;
+            document.querySelectorAll('.collapse.show').forEach(open => {
+                if ('#' + open.id !== targetId) bootstrap.Collapse.getInstance(open).hide();
+            });
+        });
+    });
+</script>

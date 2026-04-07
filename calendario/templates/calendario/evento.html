@@ -9,8 +9,8 @@
 {% endblock %}
 
 
-{% block menu_preferenze %}
-<!--{% include "./calendario_menu_preferenze.html" %}-->
+{% block menu_vista %}
+{% include "./calendario_menu_vista_evento.html" %}
 {% endblock %}
 
 
@@ -35,21 +35,21 @@
 
 <h1 class="{{evento.colore_evento}} text-white text-center">{{evento.get_conferma_display|upper}}</h1>
 
-{% if is_gestore %}
-<form method="post" class="d-flex justify-content-center gap-2 my-2">
-    {% csrf_token %}
-    <select name="nuova_conferma" class="form-select form-select-sm w-auto">
-        {% for value, label in evento.Conferma.choices %}
-        <option value="{{ value }}" {% if evento.conferma == value %}selected{% endif %}>
-            {{ label }}
-        </option>
-        {% endfor %}
-    </select>
-    <button type="submit" name="salva_conferma" class="btn btn-sm btn-primary">
-        Salva
-    </button>
-</form>
-{% endif %}
+<!--{% if is_gestore %}-->
+<!--<form method="post" class="d-flex justify-content-center gap-2 my-2">-->
+<!--    {% csrf_token %}-->
+<!--    <select name="nuova_conferma" class="form-select form-select-sm w-auto">-->
+<!--        {% for value, label in evento.Conferma.choices %}-->
+<!--        <option value="{{ value }}" {% if evento.conferma == value %}selected{% endif %}>-->
+<!--            {{ label }}-->
+<!--        </option>-->
+<!--        {% endfor %}-->
+<!--    </select>-->
+<!--    <button type="submit" name="salva_conferma" class="btn btn-sm btn-primary">-->
+<!--        Salva-->
+<!--    </button>-->
+<!--</form>-->
+<!--{% endif %}-->
 
 
 <div>
