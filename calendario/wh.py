@@ -72,10 +72,18 @@ def formatta_messagio(evento, presenze, conferma=None, msg_automatico=False):
     if forse:
         forse = f'\n\n*IN FORSE - {n_forse}*\n{forse}'
 
+    note_personali = presenze.exclude(nota__isnull=True).exclude(nota='')
+    if note_personali:
+        note_personali = ['_%s_: %s' % (x.utente.nickname, x.nota) for x in note_personali]
+        note_personali = '\n\n*Note personali*\n%s' % '\n'.join(note_personali)
+    else:
+        note_personali = ''
+
     messaggio = (f'{intestazione}'
                  f'{presenti}'
                  f'{assenti}'
-                 f'{forse}')
+                 f'{forse}'
+                 f'{note_personali}')
 
     match msg_automatico:
         case 'lunedi':
