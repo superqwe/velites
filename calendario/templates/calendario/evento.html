@@ -10,7 +10,9 @@
 
 
 {% block menu_vista %}
+{% if is_gestore %}
 {% include "./calendario_menu_vista_evento.html" %}
+{% endif %}
 {% endblock %}
 
 
