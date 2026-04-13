@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['velites.pythonanywhere.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
+    'django_loguru',
     "calendario.apps.CalendarioConfig",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,12 +42,31 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+DJANGO_LOGGING_MIDDLEWARE = {
+    'DEFAULT_FORMAT': False,
+    'MESSAGE_FORMAT': "<b><green>{time}</green> <cyan>{message}</cyan></b>",
+    'LOG_USER': True
+}
+
+# MIDDLEWARE = [
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'velites.middleware.DjangoLoguruMiddleware',
+#     'django.middleware.security.SecurityMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'velites.middleware.LoginRequiredMiddleware',
+# ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'velites.middleware.DjangoLoguruMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'velites.middleware.LoginRequiredMiddleware',
