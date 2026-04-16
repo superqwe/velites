@@ -1,8 +1,11 @@
 import datetime
+import glob
 
+from django.conf import settings
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
-from django.contrib import messages
+from icecream import ic
 
 from .models import Evento, Presenza
 from .wh import invia_messaggio
@@ -83,3 +86,23 @@ def evento(request, id):
         context["pagina_attiva_prossimo_evento"] = 'active'
 
     return render(request, "calendario/evento.html", context)
+
+
+def log(request):
+    path_log = settings.BASE_DIR.parent / 'logs'
+    elenco_log = list(path_log.glob('*.*'))
+
+    elenco_log = [{
+        'nome': x.stem,
+        'data': datetime.datetime.fromtimestamp(x.stat().st_mtime).strftime('%d/%m/%Y %H:%M:%S'),
+        'path': x,
+    } for x in elenco_log]
+    ic(elenco_log, path_log)
+
+    context = {
+        'titolo': 'Storico',
+        'pagina_attiva_admin': 'active',
+        'pagina_attiva_log': 'active',
+    }
+
+    return render(request, "calendario/log.html", context)

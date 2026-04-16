@@ -10,4 +10,5 @@ urlpatterns = [
     path("eventi_futuri/", views.eventi_futuri, name="eventi_futuri"),
     path("eventi_passati/", views.eventi_passati, name="eventi_passati"),
     path("evento/<int:id>/", views.evento, name="evento"),
+    path("log/", views.log, name="log"),
 ]
